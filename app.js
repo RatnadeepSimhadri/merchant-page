@@ -1,14 +1,30 @@
 const express = require('express');
-
+const path = require('path');
 const app = express();
+const crypto = require('crypto');
 const port = 3000;
 
-// Set EJS as templating engine
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static('public'));
 
-// Route for home page
+
 app.get('/', (req, res) => {
-  res.render('index', { message: 'Main Host Application' });
+  res.render('index', { title: 'Merchant Checkout Page' });
+});
+
+
+app.get('/api/order', async (req, res) => {
+  try {
+    const response = await fetch('https://friendly-acorn-ggqqqxr6qpfw764-3000.app.github.dev/api/order');
+    const result = await response.json();
+
+    console.log("Created the Order:",result);
+    res.json(result);
+  } catch (error) {
+    console.error('Error fetching message:', error);
+    throw error;
+  }
 });
 
 app.listen(port, () => {

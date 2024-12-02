@@ -1,9 +1,64 @@
-<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Hello EJS</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <script src="http://localhost:3001/dist/sdk.umd.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+    .container {
+      text-align: center;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      min-width: 300px;
+    }
+    #button-container {
+      min-height: 40px;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-  <h1><%= message %></h1>
+<div class="container">
+  <h1><%= title %></h1>
+  <p>Welcome to My Store</p>
+  <div id="button-container"></div>
+</div>
+
+<script>
+  const { SepaButton } = window.paypal
+  async function createOrder() {
+    try {
+      const response = await fetch('/api/order');
+      return  response.json();
+    } catch (error) {
+      console.error('Error fetching message:', error);
+      throw error;
+    }
+  }
+  document.addEventListener('DOMContentLoaded', async () => {
+    const sepaButton = SepaButton({
+      buttonText: 'Pay with SEPA',
+      createOrder: async () => {
+        return await createOrder();
+      }
+    });
+
+    sepaButton.render('#button-container')
+            .catch(err => {
+              console.error('Error rendering button:', err);
+            });
+  });
+</script>
 </body>
 </html>
