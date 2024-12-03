@@ -3,7 +3,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %></title>
-  <script src="http://localhost:3001/dist/sdk.umd.js"></script>
+  <script src="http://localhost.paypal.com:3001/dist/sdk.umd.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -51,11 +51,11 @@
       buttonText: 'Pay with SEPA',
       createOrder: createOrder,
       onCancel: () => {
-        console.log('Script from parent page:', 'Popup Closed');
+        console.log('Script from parent page:', 'onCancel Called');
 
       },
       onApprove: () => {
-        console.log('Script from parent page', 'Mandate Approved');
+        console.log('Script from parent page:', 'onApprove Called');
       }
     });
 

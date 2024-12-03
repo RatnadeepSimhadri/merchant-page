@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 
 app.get('/api/order', async (req, res) => {
   try {
-    const response = await fetch('http://localhost:3001/api/order');
+    const response = await fetch('http://localhost.paypal.com:3001/api/order');
     const result = await response.json();
 
     console.log("Created the Order:",result);
