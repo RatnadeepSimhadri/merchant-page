@@ -49,8 +49,13 @@
   document.addEventListener('DOMContentLoaded', async () => {
     const sepaButton = SepaButton({
       buttonText: 'Pay with SEPA',
-      createOrder: async () => {
-        return await createOrder();
+      createOrder: createOrder,
+      onCancel: () => {
+        console.log('Script from parent page:', 'Popup Closed');
+
+      },
+      onApprove: () => {
+        console.log('Script from parent page', 'Mandate Approved');
       }
     });
 
